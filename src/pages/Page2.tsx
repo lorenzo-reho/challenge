@@ -6,12 +6,21 @@ import Button from '@mui/material/Button';
 import FormField from '../components/FormField';
 import {FormData, FormSchema} from  "../types.ts"
 import { useState } from 'react';
-
+import axios from 'axios'
 
 const Page2 = () => {
     const [status, setStatus] = useState(false);
     const {register, handleSubmit, formState: { errors } } = useForm<FormData>({resolver: zodResolver(FormSchema)});
-    const onSubmit: SubmitHandler<FormData> = (data) => {setStatus(true); console.log(data)}
+    const onSubmit:SubmitHandler<FormData> = (data) => 
+    {        
+        axios.post("http://localhost:5000", data)
+        .then((response) => {
+            console.log(response);
+            setStatus(true);
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
     
     return (
         <div className="container">
@@ -22,7 +31,6 @@ const Page2 = () => {
                 <FormField  register={register} error={errors.surname} labelText="Surname" name="surname"/>
                 <FormField  register={register} error={errors.email} labelText="Email" name="email"/>
                 <FormField  register={register} error={errors.telephone} labelText="Mobile phone" name="telephone"/>
-                
 
                 <Button className="submit-button" type='submit' variant="outlined" sx={{ my: 1 }}>Submit</Button>
                 

@@ -8,12 +8,9 @@ const Page1 = () => {
     const [joke, SetJoke] = useState('');
 
     useEffect(() => {
-        const fetchJoke = async () => {
-            axios.get('https://api.chucknorris.io/jokes/random')
-            .then(response => {SetJoke(response.data.value);})
-            .catch(error => {console.log(error)})
-        }
-        fetchJoke();
+        axios.get('https://api.chucknorris.io/jokes/random')
+        .then(response => {SetJoke(response.data.value);})
+        .catch(error => {console.log(error)})
     }, [count]);
 
     return (
